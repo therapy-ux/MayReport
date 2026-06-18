@@ -1,1 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Home Recovery — May 2026 Report</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+  :root{
+    --bg:#0f1729; --panel:#16203a; --panel2:#1c2a4a; --ink:#eaf0fb; --muted:#9bb0d3;
+    --line:#27395f; --accent:#4f9cff; --good:#34d399; --warn:#fbbf24; --bad:#f87171;
+    --teal:#2dd4bf; --violet:#a78bfa;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:linear-gradient(160deg,#0c1325,#0f1729 40%,#101a33);color:var(--ink);}
+  .wrap{max-width:1160px;margin:0 auto;padding:32px 22px 60px;}
+  header.top{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:16px;border-bottom:1px solid var(--line);padding-bottom:20px;margin-bottom:26px;}
+  .brand{font-size:13px;letter-spacing:3px;text-transform:uppercase;color:var(--accent);font-weight:600;}
+  h1{margin:6px 0 2px;font-size:30px;}
+  .sub{color:var(--muted);font-size:14px;}
+  .tag{background:var(--panel2);border:1px solid var(--line);border-radius:999px;padding:7px 15px;font-size:13px;color:var(--muted);}
+  h2.section{font-size:14px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin:38px 0 14px;border-left:3px solid var(--accent);padding-left:10px;}
+  .grid{display:grid;gap:16px;}
+  .kpis{grid-template-columns:repeat(4,1fr);}
+  .kpis-3{grid-template-columns:repeat(3,1fr);}
+  @media(max-width:880px){.kpis,.kpis-3{grid-template-columns:repeat(2,1fr);}}
+  @media(max-width:520px){.kpis,.kpis-3{grid-template-columns:1fr;}}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px 18px;}
+  .kpi .label{font-size:12.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;}
+  .kpi .val{font-size:27px;font-weight:700;margin-top:6px;}
+  .kpi .note{font-size:12.5px;color:var(--muted);margin-top:5px;}
+  .pos{color:var(--good);} .neg{color:var(--bad);} .mid{color:var(--warn);}
+  .two{display:grid;grid-template-columns:1.15fr .85fr;gap:16px;}
+  .three{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+  @media(max-width:880px){.two,.three{grid-template-columns:1fr;}}
+  .card h3{margin:0 0 14px;font-size:15px;}
+  table{width:100%;border-collapse:collapse;font-size:13.5px;}
+  th,td{text-align:left;padding:9px 8px;border-bottom:1px solid var(--line);}
+  th{color:var(--muted);font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:.4px;}
+  td.num,th.num{text-align:right;font-variant-numeric:tabular-nums;}
+  tr.total td{border-top:2px solid var(--accent);border-bottom:none;font-weight:700;}
+  .bar-wrap{background:var(--panel2);border-radius:8px;height:9px;overflow:hidden;margin-top:7px;}
+  .bar{height:100%;border-radius:8px;}
+  .prog{display:flex;justify-content:space-between;font-size:13px;margin-bottom:2px;}
+  .chart-box{position:relative;height:300px;}
+  .chart-box.sm{height:260px;}
+  .insight{background:var(--panel2);border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:10px;padding:14px 16px;margin-bottom:12px;font-size:14px;line-height:1.55;}
+  .insight b{color:#fff;}
+  footer{margin-top:40px;color:var(--muted);font-size:12px;border-top:1px solid var(--line);padding-top:16px;}
+  .pill{display:inline-block;font-size:11.5px;padding:2px 9px;border-radius:999px;font-weight:600;}
+  .pill.g{background:rgba(52,211,153,.15);color:var(--good);}
+  .pill.w{background:rgba(251,191,36,.15);color:var(--warn);}
+  .pill.b{background:rgba(248,113,113,.15);color:var(--bad);}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div>
+      <div class="brand">Home Recovery</div>
+      <h1>May 2026 — Financial &amp; Operational Report</h1>
+      <div class="sub">Reporting period: 1–31 May 2026 · Prepared for Mahmoud</div>
+    </div>
+    <div class="tag">Currency: USD · All figures from source data</div>
+  </header>
 
+  <!-- EXECUTIVE KPIs -->
+  <h2 class="section">Executive Summary</h2>
+  <div class="grid kpis">
+    <div class="card kpi">
+      <div class="label">Income Collected</div>
+      <div class="val">$10,257</div>
+      <div class="note">44.2% of expected billed</div>
+    </div>
+    <div class="card kpi">
+      <div class="label">Expected Income</div>
+      <div class="val">$23,205</div>
+      <div class="note">Fully billed for the month</div>
+    </div>
+    <div class="card kpi">
+      <div class="label">Total Expenses</div>
+      <div class="val">$23,027</div>
+      <div class="note">Across 9 categories</div>
+    </div>
+    <div class="card kpi">
+      <div class="label">Net @ Expected Income</div>
+      <div class="val pos">+$178</div>
+      <div class="note">Profit if all billings collect</div>
+    </div>
+  </div>
+
+  <div class="insight" style="margin-top:16px">
+    <b>The month is roughly break-even on paper but cash-negative today.</b> If every dollar billed in May
+    is eventually collected, Home Recovery clears a razor-thin profit of <b>$178</b>. But only
+    <b>$10,257 (44.2%)</b> has actually been collected so far, leaving <b>$12,948 outstanding</b> — so the
+    real cash position for the month is currently <b>−$12,770</b>. The single biggest lever is collections.
+  </div>
+
+  <!-- FINANCIALS -->
+  <h2 class="section">Financial Performance</h2>
+  <div class="two">
+    <div class="card">
+      <h3>Expense Breakdown</h3>
+      <table id="expTable">
+        <thead><tr><th>Category</th><th class="num">Cost</th><th class="num">% of total</th></tr></thead>
+        <tbody></tbody>
+        <tfoot><tr class="total"><td>Total Expenses</td><td class="num">$23,027.31</td><td class="num">100%</td></tr></tfoot>
+      </table>
+    </div>
+    <div class="card">
+      <h3>Where the Money Goes</h3>
+      <div class="chart-box"><canvas id="expPie"></canvas></div>
+    </div>
+  </div>
+
+  <div class="two" style="margin-top:16px">
+    <div class="card">
+      <h3>Income vs. Expenses</h3>
+      <div class="chart-box"><canvas id="ieBar"></canvas></div>
+    </div>
+    <div class="card">
+      <h3>Collections Status</h3>
+      <div class="prog"><span>Collected</span><span>$10,257 · 44.2%</span></div>
+      <div class="bar-wrap"><div class="bar" style="width:44.2%;background:var(--good)"></div></div>
+      <div class="prog" style="margin-top:14px"><span>Outstanding</span><span>$12,948 · 55.8%</span></div>
+      <div class="bar-wrap"><div class="bar" style="width:55.8%;background:var(--warn)"></div></div>
+      <div class="insight" style="margin:16px 0 0">
+        <b>Therapists Payroll ($20,239)</b> is 87.9% of all costs — the dominant cost driver.
+        Collecting the outstanding <b>$12,948</b> would more than cover it.
+      </div>
+    </div>
+  </div>
+
+  <!-- OPERATIONS -->
+  <h2 class="section">Operational Performance</h2>
+  <div class="grid kpis">
+    <div class="card kpi">
+      <div class="label">New Patients</div>
+      <div class="val">25 <span style="font-size:14px;color:var(--muted)">/ 35</span></div>
+      <div class="note"><span class="pill w">71.4% of target</span></div>
+    </div>
+    <div class="card kpi">
+      <div class="label">Total Visits</div>
+      <div class="val">283 <span style="font-size:14px;color:var(--muted)">/ 320</span></div>
+      <div class="note"><span class="pill g">88.4% of target</span></div>
+    </div>
+    <div class="card kpi">
+      <div class="label">Visits / New Patient</div>
+      <div class="val">11.3</div>
+      <div class="note">Avg episode intensity</div>
+    </div>
+    <div class="card kpi">
+      <div class="label">Expected Rev / Visit</div>
+      <div class="val">$82.00</div>
+      <div class="note">$36.24 collected / visit</div>
+    </div>
+  </div>
+
+  <div class="two" style="margin-top:16px">
+    <div class="card">
+      <h3>Target Attainment</h3>
+      <div class="prog"><span>New Patients (25 of 35)</span><span>71.4%</span></div>
+      <div class="bar-wrap"><div class="bar" style="width:71.4%;background:var(--warn)"></div></div>
+      <div class="prog" style="margin-top:16px"><span>Visits (283 of 320)</span><span>88.4%</span></div>
+      <div class="bar-wrap"><div class="bar" style="width:88.4%;background:var(--good)"></div></div>
+      <div class="insight" style="margin:18px 0 0">
+        Visit volume is strong (<b>88.4%</b>) but <b>new-patient acquisition lagged at 71.4%</b> —
+        10 patients short of target. Existing patients are being served well; the gap is at the top of the funnel.
+      </div>
+    </div>
+    <div class="card">
+      <h3>Actual vs. Target</h3>
+      <div class="chart-box"><canvas id="opBar"></canvas></div>
+    </div>
+  </div>
+
+  <!-- UNIT ECONOMICS -->
+  <h2 class="section">Unit Economics</h2>
+  <div class="grid kpis-3">
+    <div class="card kpi">
+      <div class="label">Cost per Visit</div>
+      <div class="val">$81.37</div>
+      <div class="note">$23,027 / 283 visits</div>
+    </div>
+    <div class="card kpi">
+      <div class="label">Cost per New Patient</div>
+      <div class="val">$921</div>
+      <div class="note">Fully-loaded acquisition cost</div>
+    </div>
+    <div class="card kpi">
+      <div class="label">Margin per Visit (expected)</div>
+      <div class="val pos">+$0.63</div>
+      <div class="note">$82.00 rev − $81.37 cost</div>
+    </div>
+  </div>
+  <div class="insight" style="margin-top:14px">
+    <b>The model is operating at the edge of profitability.</b> At full collection each visit earns just
+    $0.63 over its fully-loaded cost. Two clear paths to widen the margin: lift collections toward 100%
+    (the immediate cash issue), and close the new-patient gap to spread fixed costs across more volume.
+  </div>
+
+  <!-- RECOMMENDATIONS -->
+  <h2 class="section">Key Takeaways</h2>
+  <div class="card">
+    <table>
+      <thead><tr><th>Area</th><th>Status</th><th>Observation</th></tr></thead>
+      <tbody>
+        <tr><td>Collections</td><td><span class="pill b">Action</span></td><td>Only 44.2% of billed income collected. $12,948 outstanding is the top priority — it determines whether May is profitable.</td></tr>
+        <tr><td>New patient acquisition</td><td><span class="pill w">Watch</span></td><td>25 of 35 (71.4%). Growth/marketing spend was $400; the funnel needs attention to hit target.</td></tr>
+        <tr><td>Visit volume</td><td><span class="pill g">Strong</span></td><td>283 of 320 (88.4%). Throughput and retention are healthy.</td></tr>
+        <tr><td>Cost structure</td><td><span class="pill w">Watch</span></td><td>Payroll is 87.9% of costs. Margin per visit is thin (+$0.63), so volume and price discipline matter.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <footer>
+    Source: <i>May 2026 data.xlsx</i> — "May Financials" &amp; "May Operation" sheets. Net @ expected assumes
+    full collection of the $23,205 billed. Cash net to date = collected income ($10,257) − expenses ($23,027) =
+    −$12,770. New patients corrected to 25 (per client). Note: source lists 23 New-Patient-Bonus entries ($1,150) vs. 25 new patients — two bonuses may be unpaid/pending. Generated 18 Jun 2026.
+  </footer>
+</div>
+
+<script>
+const fmt = n => '$'+n.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
+const expenses = [
+  ["Therapists Payroll",20239.02],
+  ["New Patients Bonus",1150.00],
+  ["Team salary",461.00],
+  ["Growth department",400.00],
+  ["Billing services",307.72],
+  ["Webpt",252.00],
+  ["Medical Auditing",102.57],
+  ["Finance department",80.00],
+  ["Intermedia",35.00]
+];
+const total = 23027.31;
+const tb = document.querySelector('#expTable tbody');
+expenses.forEach(([c,v])=>{
+  const pct = (v/total*100);
+  tb.insertAdjacentHTML('beforeend',
+    `<tr><td>${c}</td><td class="num">${fmt(v)}</td><td class="num">${pct.toFixed(1)}%</td></tr>`);
+});
+
+const palette = ['#4f9cff','#a78bfa','#2dd4bf','#fbbf24','#f87171','#34d399','#60a5fa','#f472b6','#94a3b8'];
+const ink='#eaf0fb', muted='#9bb0d3', grid='#27395f';
+Chart.defaults.color = muted;
+Chart.defaults.font.family = "'Segoe UI',system-ui,sans-serif";
+
+new Chart(document.getElementById('expPie'),{
+  type:'doughnut',
+  data:{labels:expenses.map(e=>e[0]),datasets:[{data:expenses.map(e=>e[1]),backgroundColor:palette,borderColor:'#16203a',borderWidth:2}]},
+  options:{plugins:{legend:{position:'right',labels:{boxWidth:12,font:{size:11}}},
+    tooltip:{callbacks:{label:c=>` ${c.label}: ${fmt(c.parsed)} (${(c.parsed/total*100).toFixed(1)}%)`}}},cutout:'58%'}
+});
+
+new Chart(document.getElementById('ieBar'),{
+  type:'bar',
+  data:{labels:['Collected','Expected Income','Expenses'],
+    datasets:[{data:[10257.32,23205,23027.31],backgroundColor:['#34d399','#4f9cff','#f87171'],borderRadius:6,barThickness:64}]},
+  options:{plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>' '+fmt(c.parsed.y)}}},
+    scales:{y:{grid:{color:grid},ticks:{callback:v=>'$'+(v/1000)+'k'}},x:{grid:{display:false}}}}
+});
+
+new Chart(document.getElementById('opBar'),{
+  type:'bar',
+  data:{labels:['New Patients','Visits'],
+    datasets:[
+      {label:'Actual',data:[25,283],backgroundColor:'#4f9cff',borderRadius:5,barThickness:34},
+      {label:'Target',data:[35,320],backgroundColor:'#33476f',borderRadius:5,barThickness:34}
+    ]},
+  options:{plugins:{legend:{position:'top',labels:{boxWidth:12}}},
+    scales:{y:{grid:{color:grid},beginAtZero:true},x:{grid:{display:false}}}}
+});
+</script>
+</body>
+</html>
